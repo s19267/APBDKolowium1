@@ -64,7 +64,7 @@ namespace WebApplication1.Services
                 con.Open();
                 var tran = con.BeginTransaction();
                 com.Transaction = tran;
-                com.CommandText = "select max(IdPrescription) from Prescription";
+                com.CommandText = "select max(IdPrescription) IdPrescription from Prescription";
 
                 
                 var dr = com.ExecuteReader();
@@ -80,7 +80,7 @@ namespace WebApplication1.Services
 
 
                 com.CommandText =
-                    "insert into Prescription(IdPrescription,Date,DueDate,IdPatient,Iddoctor) values(@IdPrescription,@Date,@DueDate,@IdPatient,@IdDoctor)";
+                    " insert into Prescription(IdPrescription,Date,DueDate,IdPatient,Iddoctor) values(@IdPrescription,@Date,@DueDate,@IdPatient,@IdDoctor)";
                 com.Parameters.AddWithValue("@IdPrescription", id);
                 com.Parameters.AddWithValue("@Date", prescription.Date);
                 com.Parameters.AddWithValue("@DueDate", prescription.DueDate);
