@@ -81,6 +81,7 @@ namespace WebApplication1.Services
 
                 if (DateTime.Compare(Convert.ToDateTime(prescription.Date), Convert.ToDateTime(prescription.DueDate)) > 0)
                 {
+                    tran.Rollback();
                     return null;
                 }
 
