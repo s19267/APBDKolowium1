@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using WebApplication1.Models;
 
@@ -65,7 +66,7 @@ namespace WebApplication1.Services
                 var tran = con.BeginTransaction();
                 com.Transaction = tran;
                 com.CommandText = "select max(IdPrescription) IdPrescription from Prescription";
-
+                
                 
                 var dr = com.ExecuteReader();
                 if (!dr.Read())
@@ -78,8 +79,12 @@ namespace WebApplication1.Services
                 id++;
                 dr.Close();
 
+                if (DateTime.Compare(Convert.ToDateTime(prescription.Date), Convert.ToDateTime(prescription.DueDate)) > 0)
+                {
+                    return null;
+                }
 
-                com.CommandText =
+                    com.CommandText =
                     " insert into Prescription(IdPrescription,Date,DueDate,IdPatient,Iddoctor) values(@IdPrescription,@Date,@DueDate,@IdPatient,@IdDoctor)";
                 com.Parameters.AddWithValue("@IdPrescription", id);
                 com.Parameters.AddWithValue("@Date", prescription.Date);
